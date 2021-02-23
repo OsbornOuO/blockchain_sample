@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/gob"
+	"runtime/debug"
 
 	"github.com/rs/zerolog/log"
 )
@@ -80,6 +81,7 @@ func Deserialize(data []byte) *Block {
 // ErrHandler ...
 func ErrHandler(err error) {
 	if err != nil {
-		log.Panic().Err(err).Msgf(err.Error())
+		debug.PrintStack()
+		log.Panic().Stack().Err(err).Msgf("err %s", err.Error())
 	}
 }

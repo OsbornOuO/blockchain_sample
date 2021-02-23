@@ -78,7 +78,10 @@ func InitBlockChain(address string) *BlockChain {
 		cbtx := CoinbaseTx(address, genesisData)
 		genesis := Genesis(cbtx)
 		fmt.Println("Genesis created")
-		err := txn.Set([]byte("lh"), genesis.Hash)
+		err := txn.Set(genesis.Hash, genesis.Serialize())
+		ErrHandler(err)
+		
+		err = txn.Set(lastHashKey, genesis.Hash)
 		lastHash = genesis.Hash
 
 		return err
@@ -107,7 +110,7 @@ func ContinueBlockChain(address string) *BlockChain {
 	ErrHandler(err)
 
 	err = db.Update(func(txn *badger.Txn) error {
-		item, err := txn.Get([]byte("lh"))
+		item, err := txn.Get(lastHashKey)
 		ErrHandler(err)
 
 		err = item.Value(func(val []byte) error {
