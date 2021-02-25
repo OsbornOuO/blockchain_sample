@@ -689,7 +689,7 @@ func (m *KV) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
-		preIndex := iNdEx
+		pReIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
@@ -928,7 +928,7 @@ func (m *KV) Unmarshal(dAtA []byte) error {
 			}
 			m.StreamDone = bool(v != 0)
 		default:
-			iNdEx = preIndex
+			iNdEx = pReIndex
 			skippy, err := skipPb(dAtA[iNdEx:])
 			if err != nil {
 				return err
@@ -956,7 +956,7 @@ func (m *KVList) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
-		preIndex := iNdEx
+		pReIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
@@ -1016,7 +1016,7 @@ func (m *KVList) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			iNdEx = preIndex
+			iNdEx = pReIndex
 			skippy, err := skipPb(dAtA[iNdEx:])
 			if err != nil {
 				return err
@@ -1044,7 +1044,7 @@ func (m *ManifestChangeSet) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
-		preIndex := iNdEx
+		pReIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
@@ -1104,7 +1104,7 @@ func (m *ManifestChangeSet) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			iNdEx = preIndex
+			iNdEx = pReIndex
 			skippy, err := skipPb(dAtA[iNdEx:])
 			if err != nil {
 				return err
@@ -1132,7 +1132,7 @@ func (m *ManifestChange) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
-		preIndex := iNdEx
+		pReIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
@@ -1249,7 +1249,7 @@ func (m *ManifestChange) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			iNdEx = preIndex
+			iNdEx = pReIndex
 			skippy, err := skipPb(dAtA[iNdEx:])
 			if err != nil {
 				return err
