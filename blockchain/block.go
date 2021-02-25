@@ -2,7 +2,6 @@ package blockchain
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"encoding/gob"
 	"runtime/debug"
 
@@ -25,14 +24,13 @@ func Genesis(coinbase *Transaction) *Block {
 // HashTransactions 將 transaction 與 prev hash 做一次 hash
 func (b *Block) HashTransactions() []byte {
 	var txHashes [][]byte
-	var txHash [32]byte
 
 	for _, tx := range b.Transaction {
-		txHashes = append(txHashes, tx.ID)
+		txHashes = append(txHashes, tx.Serialize())
 	}
 
-	txHash = sha256.Sum256(bytes.Join(txHashes, []byte{}))
-	return txHash[:]
+	tree := NewMerkleTree(txHashes)
+	return tree.RootNode.Data
 }
 
 // CreateBlock 創建區塊

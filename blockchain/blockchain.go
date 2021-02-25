@@ -269,6 +269,9 @@ func (chain *BlockChain) FindTransaction(id []byte) (Transaction, error) {
 }
 
 func (chain *BlockChain) VerifyTransaction(tx *Transaction, privKey ecdsa.PrivateKey) bool {
+	if tx.IsCoinbase() {
+		return true
+	}
 	prevTXs := make(map[string]Transaction)
 
 	for _, in := range tx.Inputs {
