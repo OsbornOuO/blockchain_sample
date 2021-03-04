@@ -4,21 +4,24 @@ import (
 	"bytes"
 	"encoding/gob"
 	"runtime/debug"
+	"time"
 
 	"github.com/rs/zerolog/log"
 )
 
 // Block 區塊
 type Block struct {
+	Timestamp   uint64
 	Hash        []byte
 	Transaction []*Transaction
 	PrevHash    []byte // 上一個 hash
 	Nonce       int    // 隨機數
+	Height      int
 }
 
 // Genesis 創建初始區塊
 func Genesis(coinbase *Transaction) *Block {
-	return CreateBlock([]*Transaction{coinbase}, []byte{})
+	return CreateBlock([]*Transaction{coinbase}, []byte{},0)
 }
 
 // HashTransactions 將 transaction 與 prev hash 做一次 hash
@@ -34,12 +37,14 @@ func (b *Block) HashTransactions() []byte {
 }
 
 // CreateBlock 創建區塊
-func CreateBlock(txs []*Transaction, prevHash []byte) *Block {
+func CreateBlock(txs []*Transaction, prevHash []byte, height int) *Block {
 	block := &Block{
+		Timestamp:   uint64(time.Now().Unix()),
 		Hash:        []byte{},
 		Transaction: txs,
 		PrevHash:    prevHash,
 		Nonce:       0,
+		Height:      height,
 	}
 	pow := NewProof(block)
 	nonce, hash := pow.Run()

@@ -3,6 +3,7 @@ package blockchain
 import (
 	"bytes"
 	"encoding/hex"
+	"fmt"
 	"log"
 
 	"github.com/dgraph-io/badger"
@@ -95,7 +96,8 @@ func (u *UTXOSet) Update(block *Block) {
 				for _, in := range tx.Inputs {
 					updateOuts := TXOutputs{}
 					inID := append(utxoPrefix, in.ID...)
-					item, err := txn.Get(in.ID)
+					fmt.Printf("update key is %s\n", inID)
+					item, err := txn.Get(inID)
 					ErrHandler(err)
 					var v []byte
 					err = item.Value(func(val []byte) error {
